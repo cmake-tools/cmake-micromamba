@@ -23,7 +23,7 @@ else()
 endif()
 
 micromamba(VERSION 1.5.7-0)
-if(CXX_STD_11)
+if(NOT "${CXX_STD_11}" STREQUAL "-1")
   micromamba_environment(CHANNELS conda-forge DEPENDENCIES fmt)
   find_package(fmt REQUIRED)
   add_executable(cmake-micromamba_fetchcontent.test main.cpp)
