@@ -23,13 +23,14 @@ else()
 endif()
 
 micromamba(VERSION 1.5.7-0)
-micromamba_environment(CHANNELS conda-forge DEPENDENCIES fmt)
-
-find_package(fmt REQUIRED)
-
-add_executable(cmake-micromamba_fetchcontent.test main.cpp)
-target_link_libraries(cmake-micromamba_fetchcontent.test fmt::fmt)
-
-install(TARGETS cmake-micromamba_fetchcontent.test RUNTIME DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/install")
+if(CXX_STD_11)
+  micromamba_environment(CHANNELS conda-forge DEPENDENCIES fmt)
+  find_package(fmt REQUIRED)
+  add_executable(cmake-micromamba_fetchcontent.test main.cpp)
+  target_link_libraries(cmake-micromamba_fetchcontent.test fmt::fmt)
+  install(TARGETS cmake-micromamba_fetchcontent.test RUNTIME DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/install")
+else()
+  micromamba_environment(CHANNELS conda-forge)
+endif()
 
 cmake_policy(POP)
